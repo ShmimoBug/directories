@@ -24,17 +24,21 @@ static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ex
         return;
 
     if (dir->d_type == DT_DIR) {
+        // don't add 'current directory' to list, no need
         if (strcmp(dir->d_name, ".") == 0)
             return;
 
         FileItem* item = NULL;
 
+        // if the added directory is the 'parent directory', put it at the front of the list
         if (strcmp(dir->d_name, "..") == 0) {
             if (list->size > 0) {
+                // move the list over by one, set new item to be the first member in the list
                 memmove(list->items + 1, list->items, sizeof(FileItem) * list->size);
                 item = &list->items[0];
             }
         } else {
+            // if the item is just a regular directory, append to the end of the list
             item = &list->items[list->size];
         }
 
@@ -42,6 +46,7 @@ static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ex
         item->type = IT_DIR;
         list->size++;
     } else {
+        // if the item is a file, check if the user wants to filter for specific file extensions
         if ((ext == NULL) || (strstr(dir->d_name, ext) != NULL)) {
             FileItem* item = &list->items[list->size];
             strcpy(item->name, dir->d_name);
@@ -92,6 +97,5 @@ void LFSUpdateChoices(int choice, FileList* list, FileItem* item) {
         strcat(cwd, item->name);
     }
 
-    printf("cwd=%s\n", cwd);
     LFSFileListLoad(list, cwd);
 }

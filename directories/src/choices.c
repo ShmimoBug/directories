@@ -13,6 +13,8 @@ void ChoicesPrint(const FileList* list) {
         return;
     }
 
+    // print the list of directories and the exit command, directories are listed in BLUE, everything else is white
+
     puts("\t[e]xit");
     printf(NORMAL_COLOR);
     for (int i = 0; i < list->size; i++) {
@@ -24,7 +26,6 @@ void ChoicesPrint(const FileList* list) {
 
 int ChoicesGetChoice() {
     int choice = getchar();
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n') {}
     return choice;
 }
