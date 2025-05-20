@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/directories.dir/directories/src/main.c.o CMakeFiles/directories.dir/directories/src/d_main.c.o CMakeFiles/directories.dir/directories/src/choices.c.o CMakeFiles/directories.dir/directories/src/file_system.c.o CMakeFiles/directories.dir/directories/src/system/linux_fs.c.o -o directories 
