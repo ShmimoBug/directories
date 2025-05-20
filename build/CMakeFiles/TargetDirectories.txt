@@ -1,3 +1,0 @@
-/home/matthew/Programming/C/directories/build/CMakeFiles/directories.dir
-/home/matthew/Programming/C/directories/build/CMakeFiles/edit_cache.dir
-/home/matthew/Programming/C/directories/build/CMakeFiles/rebuild_cache.dir
