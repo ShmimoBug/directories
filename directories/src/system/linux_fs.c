@@ -20,6 +20,9 @@ char* LFSLoadCWD() {
 }
 
 static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ext) {
+    if (list == NULL || dir == NULL)
+        return;
+
     if (dir->d_type == DT_DIR) {
         if (strcmp(dir->d_name, ".") == 0)
             return;
@@ -52,11 +55,19 @@ int LFSFileListLoad(FileList* list, const char* working_dir) {
     if (list == NULL || working_dir == NULL)
         return 1;
 
+    if (strcmp(working_dir, "/home") == 0)
+        return 1;
+
     list->size = 0;
 
     DIR* d;
     struct dirent* dir;
     d = opendir(working_dir);
+    if (d == NULL) {
+        fprintf(stderr, "ERROR: Failed to load directory [%s]\n", working_dir);
+        return 1;
+    }
+
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             LFSFileListAppend(list, dir, NULL);
@@ -69,7 +80,18 @@ int LFSFileListLoad(FileList* list, const char* working_dir) {
 }
 
 void LFSUpdateChoices(int choice, FileList* list, FileItem* item) {
-    strcat(cwd, "/");
-    strcat(cwd, item->name);
+    if (choice == 0) {
+        char* new_end = strrchr(cwd, '/');
+        *new_end = 0;
+        if (strcmp(cwd, "/home") == 0) {
+            *new_end = '/';
+            puts("Cannot go further");
+        }
+    } else {
+        strcat(cwd, "/");
+        strcat(cwd, item->name);
+    }
+
+    printf("cwd=%s\n", cwd);
     LFSFileListLoad(list, cwd);
 }
