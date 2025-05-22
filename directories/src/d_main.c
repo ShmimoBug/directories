@@ -2,7 +2,7 @@
 #include "choices.h"
 #include "file_system.h"
 
-#define ASCII_TO_INT 48
+#include <stdio.h>
 
 int DirectoriesMain(int argc, char* arv[]) {
     if (FileSystemLoadCWD() == NULL)
@@ -13,10 +13,8 @@ int DirectoriesMain(int argc, char* arv[]) {
     while (1) {
         ChoicesPrint(FileSystemGetFileList());
         int choice = ChoicesGetChoice();
-        if (choice == 'e' || choice == 'E')
-            break;
+        if (choice <= -1) break;
 
-        choice -= ASCII_TO_INT;
         FileSystemUpdateChoices(choice);
     }
 
