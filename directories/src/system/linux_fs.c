@@ -28,7 +28,7 @@ static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ex
         if (strcmp(dir->d_name, ".") == 0)
             return;
 
-        FileItem* item = NULL;
+        FileItem* item = &list->items[list->size];
 
         // if the added directory is the 'parent directory', put it at the front of the list
         if (strcmp(dir->d_name, "..") == 0) {
@@ -37,9 +37,6 @@ static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ex
                 memmove(list->items + 1, list->items, sizeof(FileItem) * list->size);
                 item = &list->items[0];
             }
-        } else {
-            // if the item is just a regular directory, append to the end of the list
-            item = &list->items[list->size];
         }
 
         strcpy(item->name, dir->d_name);

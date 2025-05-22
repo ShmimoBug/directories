@@ -1,5 +1,6 @@
 #include "choices.h"
 
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -10,14 +11,15 @@
 
 static char in_buffer[8] = "\0";
 
-void ChoicesPrint(const FileList* list) {
-    if (list == NULL) {
+void ChoicesPrint(const FileList* list, const char *cwd) {
+    if (list == NULL || cwd == NULL) {
         perror("ERROR: NULL reference to list in 'ChoicesPrint'\n");
         return;
     }
 
     // print the list of directories and the exit command, directories are listed in BLUE, everything else is white
 
+    printf("cwd: %s\n", cwd);
     puts("\t[e]xit");
     printf(NORMAL_COLOR);
     for (int i = 0; i < list->size; i++) {
@@ -28,18 +30,20 @@ void ChoicesPrint(const FileList* list) {
 }
 
 int ChoicesGetChoice() {
-    while ((in_buffer[0] != 'e') && (in_buffer[0] != 'E')) {
+    while (1) {
         if (fgets(in_buffer, sizeof(in_buffer), stdin)) {
+            if ((in_buffer[0] == 'e') || (in_buffer[0] == 'E')) {
+                break;
+            }
+
             int choice = 0;
             int result = sscanf(in_buffer, "%d", &choice);
             if (result == EOF) {
                 perror("ERROR: Failed to receive data from input buffer.");
             } else if (result == 0) {
                 puts("Invalid input, try again!");
-                if (strcspn(in_buffer, "\n") >= 7) {
-                    while (fgetc(stdin) != '\n');
-                }
             } else {
+                if (choice < 0) return INT_MAX;
                 return choice;
             }
         }

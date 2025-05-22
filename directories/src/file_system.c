@@ -22,6 +22,10 @@ const char* FileSystemLoadCWD() {
 #endif
 }
 
+const char* FileSystemGetCWD() {
+    return cwd_ptr;
+}
+
 const FileList* FileSystemGetFileList() {
     return &list;
 }

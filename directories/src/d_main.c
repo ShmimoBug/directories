@@ -11,7 +11,7 @@ int DirectoriesMain(int argc, char* arv[]) {
     FileSystemInit();
 
     while (1) {
-        ChoicesPrint(FileSystemGetFileList());
+        ChoicesPrint(FileSystemGetFileList(), FileSystemGetCWD());
         int choice = ChoicesGetChoice();
         if (choice <= -1) break;
 

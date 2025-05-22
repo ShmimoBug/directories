@@ -5,6 +5,7 @@
 
 void FileSystemInit();
 const char* FileSystemLoadCWD();
+const char* FileSystemGetCWD();
 const struct FileList* FileSystemGetFileList();
 void FileSystemUpdateChoices(int choice);
 void FileSystemDeInit();
