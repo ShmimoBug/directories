@@ -40,10 +40,12 @@ int ChoicesGetChoice() {
             int result = sscanf(in_buffer, "%d", &choice);
             if (result == EOF) {
                 perror("ERROR: Failed to receive data from input buffer.");
-            } else if (result == 0) {
-                puts("Invalid input, try again!");
             } else {
-                if (choice < 0) return INT_MAX;
+                if (result == 0 || choice < 0) {
+                    puts("Invalid input, try again!");
+                    continue;
+                }
+
                 return choice;
             }
         }
