@@ -1,4 +1,4 @@
-#include "system/win_fs.h"
+#include "system/sys_fs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +7,7 @@
 
 static char cwd[MAX_PATH];
 
-char* WFSLoadCWD() {
+char* SysLoadCWD() {
 	if (GetCurrentDirectory(sizeof(cwd), cwd) != 0) {
 		return cwd;
 	}
@@ -44,7 +44,7 @@ static void WFSFileListAppend(FileList* list, const WIN32_FIND_DATA* fdFile, con
 	}
 }
 
-int WFSFileListLoad(FileList* list, const char* working_dir) {
+int SysFileListLoad(FileList* list, const char* working_dir) {
 	if (list == NULL || working_dir == NULL) return -1;
 	
 	list->size = 0;
@@ -67,7 +67,7 @@ int WFSFileListLoad(FileList* list, const char* working_dir) {
 	return 0;
 }
 
-void WFSUpdateChoices(int choice, FileList* list, FileItem* item) {
+void SysUpdateChoices(int choice, FileList* list, FileItem* item) {
 	if (choice == 0) {
 		char* new_end = strrchr(cwd, '\\');
 		*new_end = 0;
@@ -82,5 +82,5 @@ void WFSUpdateChoices(int choice, FileList* list, FileItem* item) {
 		strcat(cwd, item->name);
 	}
 
-	WFSFileListLoad(list, cwd);
+	SysFileListLoad(list, cwd);
 }

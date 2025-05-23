@@ -1,4 +1,4 @@
-#include "system/linux_fs.h"
+#include "system/sys_fs.h"
 
 #include <dirent.h>
 #include <linux/limits.h>
@@ -10,7 +10,7 @@
 
 static char cwd[PATH_MAX];
 
-char* LFSLoadCWD() {
+char* SysLoadCWD() {
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         return cwd;
     }
@@ -53,7 +53,7 @@ static void LFSFileListAppend(FileList* list, struct dirent* dir, const char* ex
     }
 }
 
-int LFSFileListLoad(FileList* list, const char* working_dir) {
+int SysFileListLoad(FileList* list, const char* working_dir) {
     if (list == NULL || working_dir == NULL)
         return 1;
 
@@ -81,7 +81,7 @@ int LFSFileListLoad(FileList* list, const char* working_dir) {
     return 0;
 }
 
-void LFSUpdateChoices(int choice, FileList* list, FileItem* item) {
+void SysUpdateChoices(int choice, FileList* list, FileItem* item) {
     if (choice == 0) {
         char* new_end = strrchr(cwd, '/');
         *new_end = 0;
@@ -94,5 +94,5 @@ void LFSUpdateChoices(int choice, FileList* list, FileItem* item) {
         strcat(cwd, item->name);
     }
 
-    LFSFileListLoad(list, cwd);
+    SysFileListLoad(list, cwd);
 }
