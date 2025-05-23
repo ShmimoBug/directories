@@ -5,6 +5,13 @@
 #include <Windows.h>
 #include "fl_def.h"
 
+/*
+ * Windows File System
+ *
+ * Implements system function calls to get current working directory
+ * and list its contents for the windows operating system
+ * */
+
 static char cwd[MAX_PATH];
 
 char* SysLoadCWD() {

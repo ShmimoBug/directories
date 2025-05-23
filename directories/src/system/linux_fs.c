@@ -8,6 +8,13 @@
 
 #include "fl_def.h"
 
+/*
+ * Linux File System
+ *
+ * Implements system function calls to get current working directory 
+ * and list its contents for the linux operating system
+ * */
+
 static char cwd[PATH_MAX];
 
 char* SysLoadCWD() {
