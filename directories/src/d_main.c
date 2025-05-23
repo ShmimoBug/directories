@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-int DirectoriesMain(int argc, char* arv[]) {
+int DirectoriesMain(int argc, char* argv[]) {
     if (FileSystemLoadCWD() == NULL)
         return 1;
 
